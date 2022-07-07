@@ -1,16 +1,16 @@
-import torch
+# import torch
 import cv2
 import time
 from models import GazeTracker
 
 # print(torch.__version__)
 
-def draw_eye(frame, eye, left=True)
+def draw_eye(frame, eye, left=True):
     EYE_HEIGHT = 60
     EYE_WIDTH = EYE_HEIGHT * 2
 
     eye = cv2.cvtColor(eye, cv2.COLOR_GRAY2BGR)
-    eye = cv2.resize(eye,(EYE_WIDTH, EYE_HEIGFHT))
+    eye = cv2.resize(eye,(EYE_WIDTH, EYE_HEIGHT))
 
     if left:
         frame[0:EYE_HEIGHT, 0:EYE_WIDTH, :] = eye
