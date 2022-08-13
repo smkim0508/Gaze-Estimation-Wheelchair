@@ -3,7 +3,12 @@ import time
 from models import GazeTracker
 
 def main():
-    DEBUG = True #False
+    DEBUG = True # Or False
+
+    RIGHT_THRES = 0.5 # TBD
+    LEFT_THRES = 0.5 # TBD
+    UP_THRES = 0.5 # TBD
+    DOWN_THRES = 0.5 # TBD
 
     # webcam set up
     webcam = cv2.VideoCapture(0)
@@ -40,11 +45,11 @@ def main():
         print('yaw: ', yaw, '    pitch: ', pitch) # 0.0 ~ 1.0 
 
         if yaw is not None:
-            if yaw < LEFT_THRES:
+            if yaw < LEFT_THRES: # Threshold for left turn
                 pass
                 # turn left
                 # arduino control function()
-            elif yaw > RIGHT_THRES:
+            elif yaw > RIGHT_THRES: # Threshold for right turn
                 pass
                 # turn right
                 # arduino control function()
