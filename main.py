@@ -52,6 +52,7 @@ def main():
     tracker = GazeTracker()
 
     frame_cnt = 0
+
     while True:
         frame_cnt += 1 #increases index for frame refresh
 
