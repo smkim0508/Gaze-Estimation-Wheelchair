@@ -15,7 +15,7 @@ def main():
 
     # webcam set up
     webcam = cv2.VideoCapture(0)
-    webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 1040)
     webcam.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
     # gaze tracker
@@ -36,18 +36,19 @@ def main():
 
         if face is not None:
             cv2.imshow('face', face)
-            
-        str_yaw = '%.3f' % (yaw)
-        str_pitch = '%.3f' % (pitch)
-        vis = cv2.putText(vis, str_yaw, (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
-        vis = cv2.putText(vis, str_yaw, (610, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
-        vis = cv2.putText(vis, str_pitch, (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
-        vis = cv2.putText(vis, str_pitch, (610, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
 
-        save_key = cv2.waitKey(33)
-        if save_key == ord('s'):
-            save = cv2.putText(save, str_yaw, (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
-            save = cv2.putText(save, str_pitch, (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
+        if yaw and pitch is not None:
+            str_yaw = '%.3f' % (yaw)
+            str_pitch = '%.3f' % (pitch)
+            vis = cv2.putText(vis, str_yaw, (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
+            vis = cv2.putText(vis, str_yaw, (850, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
+            vis = cv2.putText(vis, str_pitch, (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
+            vis = cv2.putText(vis, str_pitch, (850, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
+
+            save_key = cv2.waitKey(33)
+            if save_key == ord('s'):
+                save = cv2.putText(save, str_yaw, (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
+                save = cv2.putText(save, str_pitch, (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
 
         cv2.imshow('window', vis)
         cv2.imshow('calibration window', save)

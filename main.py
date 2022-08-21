@@ -1,14 +1,47 @@
+import os
 import cv2
 import time
 from models import GazeTracker
 
+# Thresholds for motor control
+
+RIGHT_THRES = 0.80
+LEFT_THRES = 0.38
+UP_THRES = 0.5 # TBD
+DOWN_THRES = 0.5 # TBD
+
+PRINT_CYCLE = 15 # Controls arduino every 15 frames
+
+# arduino motor control adjustment
+
+def control_arduino_yaw(yaw):
+    if yaw is None:
+        return
+
+    if yaw < LEFT_THRES:
+        # os.system('turn left') #text to speech for testing movement
+        print('Turn left')
+    elif yaw > RIGHT_THRES:
+        # os.system('turn right')
+        print('Turn right')
+
+    return # receive feedback from arduino
+
+def control_arduino_pitch(pitch):
+    if pitch is None:
+        return
+
+    if pitch < DOWN_THRES:
+        # os.system('move down') #text to speech for testing movement
+        print('Move down')
+    elif pitch > UP_THRES:
+        # os.system('move up')
+        print('Move up')
+
+    return
+
 def main():
     DEBUG = True # Or False
-
-    RIGHT_THRES = 0.5 # TBD
-    LEFT_THRES = 0.5 # TBD
-    UP_THRES = 0.5 # TBD
-    DOWN_THRES = 0.5 # TBD
 
     # webcam set up
     webcam = cv2.VideoCapture(0)
@@ -18,7 +51,10 @@ def main():
     # gaze tracker
     tracker = GazeTracker()
 
+    frame_cnt = 0
     while True:
+        frame_cnt += 1 #increases index for frame refresh
+
         _, frame = webcam.read()
         frame = cv2.flip(frame,1) #horizontal flip
 
@@ -27,6 +63,10 @@ def main():
         face = eval_results.face_image
         yaw = eval_results.eye_hor_dir
         pitch = eval_results.eye_ver_dir
+
+        # Arduino control
+        if frame_cnt % PRINT_CYCLE == 0: # adjusts rate for arduino control
+            arduino_res = control_arduino(yaw) # returning response from arduino
 
         if DEBUG:
             vis = tracker.annotated_frame()
