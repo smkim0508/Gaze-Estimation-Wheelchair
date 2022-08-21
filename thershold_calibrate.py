@@ -2,6 +2,8 @@ import cv2
 import time
 from models import GazeTracker
 
+# optimized for calibrating threshold for motor control
+
 def main():
 
     # debug true by default
@@ -35,13 +37,15 @@ def main():
         if face is not None:
             cv2.imshow('face', face)
             
-        vis = cv2.putText(vis, str(yaw), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
-        vis = cv2.putText(vis, str(pitch), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
+        vis = cv2.putText(vis, '{: .2f}'.format(yaw), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
+        vis = cv2.putText(vis, '{: .2f}'.format(yaw), (610, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
+        vis = cv2.putText(vis, '{: .2f}'.format(pitch), (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
+        vis = cv2.putText(vis, '{: .2f}'.format(pitch), (610, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
 
-        save_key = cv2.waitKey(0)
+        save_key = cv2.waitKey(33)
         if save_key == ord('s'):
-            save = cv2.putText(save, str(yaw), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
-            save = cv2.putText(save, str(pitch), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
+            save = cv2.putText(save, '{: .4f}'.format(yaw), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,0,0), 1)
+            save = cv2.putText(save, '{: .2f}'.format(pitch), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255), 1)
 
         cv2.imshow('window', vis)
         cv2.imshow('calibration window', save)
