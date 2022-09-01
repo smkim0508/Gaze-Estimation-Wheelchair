@@ -5,10 +5,10 @@ from models import GazeTracker
 
 # Thresholds for motor control
 
-RIGHT_THRES = 0.80
+RIGHT_THRES = 0.76
 LEFT_THRES = 0.38
-UP_THRES = 0.5 # TBD
-DOWN_THRES = 0.5 # TBD
+UP_THRES = 0.69 # TBD
+DOWN_THRES = 0.85 # TBD
 
 PRINT_CYCLE = 15 # Controls arduino every 15 frames
 
