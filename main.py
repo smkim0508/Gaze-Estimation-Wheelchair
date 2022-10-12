@@ -4,6 +4,13 @@ import time
 import serial
 from models import GazeTracker
 
+# Constants for connection to serial port
+
+PORT = "/dev/tty.usbmodem14201"
+SERIAL = 9600
+
+ser = serial.Serial(PORT, SERIAL)
+
 # Thresholds for motor control
 
 RIGHT_THRES = 0.76
@@ -22,9 +29,14 @@ def control_arduino_yaw(yaw):
     if yaw < LEFT_THRES:
         # os.system('turn left') #text to speech for testing movement
         print('Turn left')
+        time.sleep(0.1)
+        ser.write(b'L')
+
     elif yaw > RIGHT_THRES:
         # os.system('turn right')
         print('Turn right')
+        time.sleep(0.1)
+        ser.write(b'R')
 
     return # receive feedback from arduino
 
@@ -35,9 +47,14 @@ def control_arduino_pitch(pitch):
     if pitch < DOWN_THRES:
         # os.system('move down') #text to speech for testing movement
         print('Move down')
+        time.sleep(0.1)
+        ser.write(b'D')
+
     elif pitch > UP_THRES:
         # os.system('move up')
         print('Move up')
+        time.sleep(0.1)
+        ser.write(b'U')
 
     return
 
@@ -68,9 +85,9 @@ def main():
 
         # Arduino control
         if frame_cnt % PRINT_CYCLE == 0: # adjusts rate for arduino control
-            arduino_res_yaw = control_arduino_yaw(yaw) # returning response from arduino
-            arduino_res_pitch = control_arduino_pitch(pitch)
-
+            arduino_res_yaw = control_arduino_yaw(yaw) # call on left-right control function based on yaw value
+            arduino_res_pitch = control_arduino_pitch(pitch) # call on up-down control function based on pitch value
+            
         if DEBUG:
             vis = tracker.annotated_frame()
 
@@ -85,26 +102,7 @@ def main():
             if key == ord('q'):
                 break
                 
-        print('yaw: ', yaw, '    pitch: ', pitch) # 0.0 ~ 1.0 
-
-        if yaw is not None:
-            if yaw < LEFT_THRES: # Threshold for left turn
-                pass
-                # turn left
-                # arduino control function()
-            elif yaw > RIGHT_THRES: # Threshold for right turn
-                pass
-                # turn right
-                # arduino control function()
-
-        if pitch is not None:
-            if pitch < DOWN_THRES:
-                pass
-                # adjust turn downwards
-
-            elif pitch > UP_THRES:
-                pass
-                # adjust turn upwards
+        print('yaw: ', yaw, '    pitch: ', pitch) # within a range of 0.0 ~ 1.0 
 
 if __name__ == '__main__':
     main()
