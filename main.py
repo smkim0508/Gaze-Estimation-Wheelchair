@@ -1,6 +1,7 @@
 import os
 import cv2
 import time
+import serial
 from models import GazeTracker
 
 # Thresholds for motor control
@@ -67,7 +68,8 @@ def main():
 
         # Arduino control
         if frame_cnt % PRINT_CYCLE == 0: # adjusts rate for arduino control
-            arduino_res = control_arduino(yaw) # returning response from arduino
+            arduino_res_yaw = control_arduino_yaw(yaw) # returning response from arduino
+            arduino_res_pitch = control_arduino_pitch(pitch)
 
         if DEBUG:
             vis = tracker.annotated_frame()
