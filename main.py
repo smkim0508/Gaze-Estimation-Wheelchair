@@ -6,7 +6,7 @@ from models import GazeTracker
 
 # Constants for connection to serial port
 
-PORT = "/dev/tty.usbmodem14201"
+PORT = "/dev/tty.usbmodem14201" # Adjust this value to fit local serial port
 SERIAL = 9600
 
 ser = serial.Serial(PORT, SERIAL)
