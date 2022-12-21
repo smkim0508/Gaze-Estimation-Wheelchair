@@ -3,7 +3,7 @@ import time
 
 print(serial.__version__)
 
-PORT = "/dev/tty.usbmodem14201"
+PORT = "/dev/tty.usbmodem142101"
 
 SERIAL = 9600
 

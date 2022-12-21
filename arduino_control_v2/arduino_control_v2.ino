@@ -44,10 +44,20 @@ void loop() {
       right = 180;
 //      Serial.print("D \n");
     }
+    // if user input is "quit", set servo to stop
+    if (incomingByte == 'Q') {
+      left = 90;
+      right = 90;
+      Serial.print("Q \n");
+    }
   }
   else {
-      Serial.print("left servo: ", left, '\n');
-      Serial.print("right servo: ", right, '\n');
+      Serial.print("left servo: ");
+      Serial.print(left);
+      Serial.print('\n');
+      Serial.print("right servo: ");
+      Serial.print(right);
+      Serial.print('\n');
   }
   servoL.write(left);
   servoR.write(right);
